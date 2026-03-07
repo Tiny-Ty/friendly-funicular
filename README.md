@@ -1,2 +1,105 @@
-# friendly-funicular
-rp2040 zero 
+# RP2040 Zero 4x4 Keypad — QMK + VIAL Firmware
+
+QMK firmware for a Waveshare RP2040 Zero connected to a 16-key (4×4) matrix keypad, with [VIAL](https://get.vial.today/) support for real-time key remapping.
+
+## Hardware
+
+| Signal | GPIO Pin |
+|--------|----------|
+| C4     | GP0      |
+| C3     | GP1      |
+| C2     | GP2      |
+| C1     | GP3      |
+| R1     | GP4      |
+| R2     | GP5      |
+| R3     | GP6      |
+| R4     | GP7      |
+
+Matrix scanning direction: **COL2ROW**
+
+## Default Keymap
+
+The default keymap is a standard numpad layout:
+
+```
+┌─────┬─────┬─────┬─────┐
+│  7  │  8  │  9  │  /  │
+├─────┼─────┼─────┼─────┤
+│  4  │  5  │  6  │  *  │
+├─────┼─────┼─────┼─────┤
+│  1  │  2  │  3  │  -  │
+├─────┼─────┼─────┼─────┤
+│  0  │  .  │ Ent │  +  │
+└─────┴─────┴─────┴─────┘
+```
+
+With VIAL, all keys can be remapped live without reflashing.
+
+## Building the Firmware
+
+### Prerequisites
+
+- [QMK CLI](https://docs.qmk.fm/#/newbs_getting_started) installed
+- For VIAL support, use the [vial-qmk](https://github.com/vial-kb/vial-qmk) fork
+
+### Build Steps (VIAL)
+
+```bash
+# 1. Clone vial-qmk (includes VIAL support on top of QMK)
+git clone https://github.com/vial-kb/vial-qmk.git
+cd vial-qmk
+git submodule update --init --recursive
+
+# 2. Copy the keyboard definition into the vial-qmk tree
+cp -r /path/to/this-repo/keyboards/rp2040_zero_keypad keyboards/rp2040_zero_keypad
+
+# 3. Build the VIAL firmware
+make rp2040_zero_keypad:vial
+
+# The output UF2 file will be at:
+#   .build/rp2040_zero_keypad_vial.uf2
+```
+
+### Build Steps (Default — no VIAL)
+
+```bash
+# Using standard QMK
+qmk compile -kb rp2040_zero_keypad -km default
+```
+
+## Flashing
+
+1. Hold the **BOOT** button on the RP2040 Zero and plug in USB (or double-tap reset).
+2. The board will appear as a USB mass-storage drive named **RPI-RP2**.
+3. Copy the `.uf2` file onto the drive. The board will reboot automatically.
+
+```bash
+# Or flash with QMK CLI (picotool):
+qmk flash -kb rp2040_zero_keypad -km vial
+```
+
+## Using VIAL
+
+1. Flash the VIAL firmware (see above).
+2. Open [VIAL](https://get.vial.today/) (web or desktop app).
+3. Connect the keypad — VIAL will detect it automatically.
+4. Remap keys, create macros, and configure layers in real time.
+
+**VIAL Unlock:** Hold the top-left and bottom-right keys simultaneously to unlock VIAL security.
+
+## File Structure
+
+```
+keyboards/rp2040_zero_keypad/
+├── config.h                    # Matrix pin definitions
+├── info.json                   # QMK keyboard metadata & layout
+├── rules.mk                   # MCU and bootloader settings
+└── keymaps/
+    ├── default/
+    │   └── keymap.c            # Default numpad keymap (1 layer)
+    └── vial/
+        ├── config.h            # VIAL UID and unlock combo
+        ├── keymap.c            # VIAL keymap (4 layers)
+        ├── rules.mk            # Enables VIA + VIAL
+        └── vial.json           # VIAL layout definition
+```
