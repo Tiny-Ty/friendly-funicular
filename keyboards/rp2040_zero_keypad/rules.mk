@@ -1,0 +1,5 @@
+# MCU
+MCU = RP2040
+
+# Bootloader
+BOOTLOADER = rp2040
