@@ -1,19 +1,23 @@
-# RP2040 Zero 4x4 Keypad — QMK + VIAL Firmware
+# RP2040 Zero Numpad — QMK + VIAL Firmware
 
-QMK firmware for a Waveshare RP2040 Zero connected to a 16-key (4×4) matrix keypad, with [VIAL](https://get.vial.today/) support for real-time key remapping.
+QMK firmware for a Waveshare RP2040 Zero connected to an 18-key numpad membrane matrix (6×6), with [VIAL](https://get.vial.today/) support for real-time key remapping.
 
 ## Hardware
 
-| Signal | GPIO Pin |
-|--------|----------|
-| C4     | GP0      |
-| C3     | GP1      |
-| C2     | GP2      |
-| C1     | GP3      |
-| R1     | GP4      |
-| R2     | GP5      |
-| R3     | GP6      |
-| R4     | GP7      |
+| Signal   | GPIO Pin |
+|----------|----------|
+| Row 0    | GP0      |
+| Row 1    | GP1      |
+| Row 2    | GP2      |
+| Row 3    | GP3      |
+| Row 4    | GP4      |
+| Row 5    | GP5      |
+| Col 0    | GP6      |
+| Col 1    | GP7      |
+| Col 2    | GP8      |
+| Col 3    | GP9      |
+| Col 4    | GP10     |
+| Col 5    | GP11     |
 
 Matrix scanning direction: **COL2ROW**
 
@@ -22,15 +26,17 @@ Matrix scanning direction: **COL2ROW**
 The default keymap is a standard numpad layout:
 
 ```
-┌─────┬─────┬─────┬─────┐
-│  7  │  8  │  9  │  /  │
-├─────┼─────┼─────┼─────┤
-│  4  │  5  │  6  │  *  │
-├─────┼─────┼─────┼─────┤
-│  1  │  2  │  3  │  -  │
-├─────┼─────┼─────┼─────┤
-│  0  │  .  │ Ent │  +  │
-└─────┴─────┴─────┴─────┘
+┌────┬────┬────┬────┐
+│NLCK│ /  │ *  │ -  │
+├────┼────┼────┼────┤
+│ 7  │ 8  │ 9  │ +  │
+├────┼────┼────┼────┤
+│ 4  │ 5  │ 6  │BCK │
+├────┼────┼────┼────┤
+│ 1  │ 2  │ 3  │ENT │
+├────┴────┼────┤    │
+│    0    │ .  │    │
+└─────────┴────┴────┘
 ```
 
 With VIAL, all keys can be remapped live without reflashing.
@@ -85,14 +91,14 @@ qmk flash -kb rp2040_zero_keypad -km vial
 3. Connect the keypad — VIAL will detect it automatically.
 4. Remap keys, create macros, and configure layers in real time.
 
-**VIAL Unlock:** Hold the top-left and bottom-right keys simultaneously to unlock VIAL security.
+**VIAL Unlock:** Hold the top-left (Num Lock) and bottom-right (.) keys simultaneously to unlock VIAL security.
 
 ## File Structure
 
 ```
 keyboards/rp2040_zero_keypad/
-├── config.h                    # Matrix pin definitions
-├── info.json                   # QMK keyboard metadata & layout
+├── config.h                    # Debounce configuration
+├── keyboard.json               # QMK keyboard metadata & layout
 ├── rules.mk                   # MCU and bootloader settings
 └── keymaps/
     ├── default/
