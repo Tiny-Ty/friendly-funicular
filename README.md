@@ -27,7 +27,7 @@ The default keymap is a standard numpad layout:
 
 ```
 ┌────┬────┬────┬────┐
-│NLCK│ /  │ *  │ -  │
+│NMLK│ /  │ *  │ -  │
 ├────┼────┼────┼────┤
 │ 7  │ 8  │ 9  │ +  │
 ├────┼────┼────┼────┤
