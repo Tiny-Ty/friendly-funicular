@@ -91,7 +91,7 @@ qmk flash -kb rp2040_zero_keypad -km vial
 3. Connect the keypad — VIAL will detect it automatically.
 4. Remap keys, create macros, and configure layers in real time.
 
-**VIAL Unlock:** Hold the top-left (Num Lock) and bottom-right (.) keys simultaneously to unlock VIAL security.
+**VIAL Unlock:** Hold the Num Lock (top-left) and . (bottom row) keys simultaneously to unlock VIAL security.
 
 ## File Structure
 
