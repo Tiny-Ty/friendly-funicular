@@ -66,6 +66,13 @@ make rp2040_zero_keypad:vial
 #   .build/rp2040_zero_keypad_vial.uf2
 ```
 
+### Build Steps (VIA)
+
+```bash
+# Using standard QMK (mainline)
+qmk compile -kb rp2040_zero_keypad -km via
+```
+
 ### Build Steps (Default — no VIAL)
 
 ```bash
@@ -83,6 +90,14 @@ qmk compile -kb rp2040_zero_keypad -km default
 # Or flash with QMK CLI (picotool):
 qmk flash -kb rp2040_zero_keypad -km vial
 ```
+
+## Using VIA
+
+1. Flash the VIA firmware (see Build Steps (VIA) above).
+2. Open the [VIA app](https://usevia.app/) in your browser.
+3. Go to the **Design** tab and enable "Show Design tab" in Settings if needed.
+4. Click **Load** and select `keyboards/rp2040_zero_keypad/keymaps/via/via_layout.json` from this repository.
+5. Go to the **Configure** tab, connect the keypad, and remap keys across all 4 layers.
 
 ## Using VIAL
 
@@ -103,6 +118,10 @@ keyboards/rp2040_zero_keypad/
 └── keymaps/
     ├── default/
     │   └── keymap.c            # Default numpad keymap (1 layer)
+    ├── via/
+    │   ├── keymap.c            # VIA keymap (4 layers)
+    │   ├── rules.mk            # Enables VIA
+    │   └── via_layout.json     # VIA draft definition (load in Design tab)
     └── vial/
         ├── config.h            # VIAL UID and unlock combo
         ├── keymap.c            # VIAL keymap (4 layers)
